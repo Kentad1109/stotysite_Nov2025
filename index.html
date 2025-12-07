@@ -7,6 +7,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- パスワード保護画面 -->
+    <div id="password-overlay" class="password-overlay">
+        <div class="password-container">
+            <h2 class="password-title">アクセス制限</h2>
+            <p class="password-description">このページを閲覧するにはパスワードが必要です</p>
+            <input type="password" id="password-input" class="password-input" placeholder="パスワードを入力" autocomplete="off">
+            <button id="password-submit" class="password-button">アクセス</button>
+            <p id="password-error" class="password-error"></p>
+        </div>
+    </div>
+
+    <!-- メインコンテンツ（初期状態では非表示） -->
+    <div id="main-content" class="main-content hidden">
     <!-- ヒーローセクション -->
     <section class="hero">
         <div class="hero-content">
@@ -177,6 +190,7 @@
     <footer class="footer">
         <p>&copy; 2025 一ヶ月の物語</p>
     </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -1,3 +1,73 @@
+// パスワード保護
+const CORRECT_PASSWORD = 'nov2025'; // ここにパスワードを設定（変更可能）
+
+function checkPassword() {
+    const password = localStorage.getItem('diary_access');
+    if (password === CORRECT_PASSWORD) {
+        showContent();
+        return true;
+    }
+    return false;
+}
+
+function showContent() {
+    const overlay = document.getElementById('password-overlay');
+    const content = document.getElementById('main-content');
+    if (overlay && content) {
+        overlay.style.display = 'none';
+        content.classList.remove('hidden');
+    }
+}
+
+function hideContent() {
+    const overlay = document.getElementById('password-overlay');
+    const content = document.getElementById('main-content');
+    if (overlay && content) {
+        overlay.style.display = 'flex';
+        content.classList.add('hidden');
+    }
+}
+
+// ページ読み込み時にパスワードチェック
+document.addEventListener('DOMContentLoaded', () => {
+    if (!checkPassword()) {
+        hideContent();
+        
+        const passwordInput = document.getElementById('password-input');
+        const passwordSubmit = document.getElementById('password-submit');
+        const passwordError = document.getElementById('password-error');
+        
+        if (passwordSubmit) {
+            passwordSubmit.addEventListener('click', () => {
+                const input = passwordInput?.value;
+                if (input === CORRECT_PASSWORD) {
+                    localStorage.setItem('diary_access', CORRECT_PASSWORD);
+                    showContent();
+                } else {
+                    if (passwordError) {
+                        passwordError.textContent = 'パスワードが正しくありません';
+                    }
+                    if (passwordInput) {
+                        passwordInput.value = '';
+                        passwordInput.focus();
+                    }
+                }
+            });
+        }
+        
+        if (passwordInput) {
+            passwordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    passwordSubmit?.click();
+                }
+            });
+            passwordInput.focus();
+        }
+    } else {
+        showContent();
+    }
+});
+
 // スクロールアニメーション
 const observerOptions = {
     threshold: 0.1,
